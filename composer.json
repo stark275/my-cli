@@ -1,0 +1,11 @@
+{
+    "name": "stark/cli",
+    "require": {
+        "splitbrain/php-cli": "^1.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Console\\" : "console"
+        }
+    }
+}
