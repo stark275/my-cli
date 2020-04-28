@@ -2,8 +2,8 @@
 /*
 
  */
+define('ROOT', __DIR__);
 require('vendor/autoload.php');
 $config = require(__DIR__.'/console/config.php');
-//var_dump($config);
 $commandContext = (new Console\Boot($config['app.context']))->getContext();
 $commandContext->run();

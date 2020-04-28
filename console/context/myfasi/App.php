@@ -41,11 +41,15 @@
         protected function main(Options $options)
         {
             if ($options->getCmd() === 'module') {
+
                 $command = $this->commandBuilder('module');
                 $commandClass = new $command($options, $this);
-                var_dump($validated = $commandClass->argsAnalyzer());
+
+                /** @noinspection PhpUndefinedMethodInspection */
+                $validated = $commandClass->argsAnalyzer();
 
                 if ($validated) {
+                    /** @noinspection PhpUndefinedMethodInspection */
                     $commandClass->createModule();
                 }
 
