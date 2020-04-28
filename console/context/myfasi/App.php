@@ -42,15 +42,20 @@
         {
             if ($options->getCmd() === 'module') {
                 $command = $this->commandBuilder('module');
-                var_dump((new $command($options, $this))->argsAnalyzer());
+                $commandClass = new $command($options, $this);
+                var_dump($validated = $commandClass->argsAnalyzer());
+
+                if ($validated) {
+                    $commandClass->createModule();
+                }
 
                 //var_dump(substr('-a',1,1));
             }
 
             if ($options->getCmd() === 'model') {
-                var_dump($options->getArgs());
-                var_dump($options->getOpt());
-                var_dump(str_replace('-','','--table=si_table'));
+                //var_dump($options->getArgs());
+                //var_dump($options->getOpt());
+                var_dump(explode('=','--param=value1=valu2'));
 
             }
 

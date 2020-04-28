@@ -27,6 +27,11 @@
          */
         private $cli;
 
+        /**
+         * @var string
+         */
+        private $name;
+
         public function __construct(Options $options, CLI $cli)
         {
             $this->options = $options;
@@ -36,7 +41,9 @@
         public function argsAnalyzer()
         {
             $args = $this->options->getArgs();
-            $name = $args[0];
+
+            $this->name = $args[0];
+
             unset($args[0]);
 
             foreach ($args as $arg){
@@ -45,41 +52,70 @@
                 		$this->givenArgs['option'][] = $arg;
                 	}else{
                         $this->cli->error('L\'option '.$arg.' n\'est pas reconnue !');
-                        break;
+                        return false;
                     }
                 }elseif ($arg[0] === '-' && $arg[1] === '-'){ //if(strpos($url, "http") === 0)
-
+                    $params = [];
                     $params = explode('=',$arg);
 
-                    //todo: gerer le cas --param=value1=valu2
+                    if (count($params ) !== 2) {
+                        $this->cli->error('Le paramètre "'.$arg.'" n\'est pas valide');
+                        $this->cli->info('Essayez la forme: --param=value');
+                       return false;
+                    }
+
 
                     $key = str_replace('-','',$params[0]);
                     $value = strtolower($params[1]);
                     if (in_array($key,$this->allowesArgs['params'])) {
                     	$this->givenArgs['params'][$key] = $value;
                     }else{
-                        $this->cli->error('Le parametre --'.$key.' n\'est pas reconnue !');
+                        $this->cli->error('Le parametre "--'.$key.'"" n\'est pas reconnue !');
+                        return false;
                     }
 
                 }else{
-                    $this->cli->fatal('Les arguments passés sont erronés');
+
+                    $this->cli->error('Les arguments passés sont erronés');
+                    $this->cli->info(
+                        'Essayez la forme: php myfasi module Stdent -a -b --param1=value1 --param2=value2'
+                    );
+                    return false;
                 }
             }
 
             return $this->givenArgs;
         }
 
-        private function option(){
+        public function createModule()
+        {
+            $templatePath = dirname(__DIR__).DIRECTORY_SEPARATOR.$this->normalizePath('templates/controller.php');
+            $template = file_get_contents($templatePath);
+            $givenName = ucfirst(strtolower($this->name)).'Controller';
 
+            //todo : Creer le namespace dynamyquement
+            $template = str_replace('ControllerName',$givenName, $template);
+
+            $path = dirname(__DIR__,4) .str_replace('/',DIRECTORY_SEPARATOR,'/app/controllers/');
+
+            if( !is_dir( $path ))
+                mkdir( $path, 0777, true );
+
+            $fileName = $path.$givenName.'.php';
+
+            var_dump(file_put_contents($fileName, $template));
         }
 
-        private function params(){
 
-        }
 
         public function getGivenArgs()
         {
             return $this->givenArgs;
+        }
+
+        public function normalizePath(string $path)
+        {
+            return str_replace('/', DIRECTORY_SEPARATOR,$path);
         }
 
 
