@@ -1,9 +1,7 @@
 <?php 
-/*
 
- */
 define('ROOT', __DIR__);
 require('vendor/autoload.php');
-$config = require(__DIR__.'/console/config.php');
+$config = require(__DIR__.'/src/console/config.php');
 $commandContext = (new Console\Boot($config['app.context']))->getContext();
 $commandContext->run();
