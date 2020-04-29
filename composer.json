@@ -9,7 +9,7 @@
     "own command line"
   ],
   "license": "MIT",
-  "minimum-stability": "dev",
+  "minimum-stability": "stable",
   "authors": [
     {
       "name": "Mumbere Malule Jacques",
