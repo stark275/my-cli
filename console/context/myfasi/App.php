@@ -48,7 +48,7 @@
                 /** @noinspection PhpUndefinedMethodInspection */
                 $validated = $commandClass->argsAnalyzer();
 
-                if ($validated) {
+                if ($validated !== false) {
                     /** @noinspection PhpUndefinedMethodInspection */
                     $commandClass->createModule();
                 }
@@ -58,6 +58,14 @@
                 //var_dump($options->getArgs());
                 //var_dump($options->getOpt());
                 var_dump(explode('=','--param=value1=valu2'));
+            }
+
+
+            //Provisoir
+
+            if (!in_array($options->getCmd(),['module','model'])) {
+                $cmd = $options->getArgs()[0];
+                $this->warning("Comande inexistante : $cmd");
             }
 
             $this->info('end <3 !');
