@@ -1,11 +1,29 @@
 {
-    "name": "stark/cli",
+  "name": "starkley/my-cli",
+  "description": "Simple PHP command line interface for personnal project",
+  "keywords": [
+    "cli",
+    "console",
+    "terminal",
+    "command line",
+    "own command line"
+  ],
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Mumbere Malule Jacques",
+      "email": "stark1_5@live.com"
+    }
+  ],
     "require": {
+        "php": ">=7.2",
         "splitbrain/php-cli": "^1.1"
     },
     "autoload": {
         "psr-4": {
+            "App\\" : "app",
             "Console\\" : "console"
         }
     }
 }
+ 

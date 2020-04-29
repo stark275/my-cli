@@ -52,15 +52,12 @@
                     /** @noinspection PhpUndefinedMethodInspection */
                     $commandClass->createModule();
                 }
-
-                //var_dump(substr('-a',1,1));
             }
 
             if ($options->getCmd() === 'model') {
                 //var_dump($options->getArgs());
                 //var_dump($options->getOpt());
                 var_dump(explode('=','--param=value1=valu2'));
-
             }
 
             $this->info('end <3 !');
