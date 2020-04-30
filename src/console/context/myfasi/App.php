@@ -44,6 +44,8 @@
          */
         protected function setup(Options $options)
         {
+            $options->setHelp('Bienvenue dans My-CLI \n Auteur: Jacques Mumbere');
+
             $options->registerCommand('module', 'Crée un module ex: student');
             $options->registerArgument('name','Nom du module',true,'module');
 
@@ -68,11 +70,18 @@
          */
         protected function main(Options $options)
         {
+     
              //Provisoir : Si la commande n'existe pas
 
             if (!in_array($options->getCmd(),['module','model'])) {
-                $cmd = $options->getArgs()[0];
-                $this->warning("Comande inexistante : $cmd");
+
+                $cmd = $options->getArgs();
+                if (count($cmd) !== 0)
+                    $cmd = $cmd[0];
+                else
+                    $cmd = '';
+
+                $this->warning("Commande inexistante : $cmd");
             }
 
             $commandName = '';
@@ -86,9 +95,13 @@
             }
 
             $command = $this->commandBuilder($commandName);
-            //$commandClass = new $command($options, $this);
-            $commandClass = $this->container->get($command);
 
+            if (!class_exists($command)) {
+               exit(0);
+            }
+
+            $commandClass = $this->container->get($command);
+            
             /** @noinspection PhpUndefinedMethodInspection */
             $validated = $commandClass->argsAnalyzer();
 
