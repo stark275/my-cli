@@ -7,6 +7,7 @@ return [
     'controllersPath' => '/app/controllers',
     'entitiesPath' => '/app/Entity',
     'tablesPath' => '/app/tables',
+    'viewsPath' => '/app/views',
 
     /*
     * Les Templates des classes à créer

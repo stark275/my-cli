@@ -108,12 +108,10 @@ abstract class MainCommand{
         );
     }
 
-    /**
-     *
-     */
+   
     protected function makeViewPath()
     {
-        $viewPath =  $this->container->get('viewssPath'); 
+        $viewPath =  $this->container->get('viewsPath'); 
         $path = ROOT. $this->normalizePath($viewPath) .strtolower($this->name);
         if(!is_dir( $path ))
             mkdir( $path, 0777, true );
