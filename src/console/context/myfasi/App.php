@@ -1,12 +1,40 @@
 <?php
     namespace Console\Context\Myfasi;
 
+    use Psr\Container\ContainerInterface;
     use splitbrain\phpcli\CLI;
     use splitbrain\phpcli\Options;
 
 
+    /**
+     * Class App
+     *
+     * @package Console\Context\Myfasi
+     */
     class App extends CLI
     {
+
+        /**
+         * @const string
+         */
+        const CONFIG = __DIR__ . '/myfasiConfig.php';
+
+        /**
+         * @var \Psr\Container\ContainerInterface
+         */
+        protected $container;
+
+        /**
+         * App constructor.
+         *
+         * @param \Psr\Container\ContainerInterface $container
+         * @param bool                              $autocatch
+         */
+        public function __construct(ContainerInterface $container, bool $autocatch = true)
+        {
+            parent::__construct($autocatch);
+            $this->container = $container;
+        }
 
         /**
          * Register options and arguments on the given $options object
@@ -42,10 +70,12 @@
         {
              //Provisoir : Si la commande n'existe pas
 
-             if (!in_array($options->getCmd(),['module','model'])) {
+            if (!in_array($options->getCmd(),['module','model'])) {
                 $cmd = $options->getArgs()[0];
                 $this->warning("Comande inexistante : $cmd");
             }
+
+            $commandName = '';
 
             if ($options->getCmd() === 'module') {
                 $commandName = 'module'; 
@@ -56,7 +86,8 @@
             }
 
             $command = $this->commandBuilder($commandName);
-            $commandClass = new $command($options, $this);
+            //$commandClass = new $command($options, $this);
+            $commandClass = $this->container->get($command);
 
             /** @noinspection PhpUndefinedMethodInspection */
             $validated = $commandClass->argsAnalyzer();
@@ -69,6 +100,11 @@
             $this->info('end <3 !');
         }
 
+        /**
+         * @param string $name
+         *
+         * @return string
+         */
         public function commandBuilder(string $name )
         {
             return 'Console\Context\Myfasi\Command\\'.ucfirst(strtolower($name)).'Command';

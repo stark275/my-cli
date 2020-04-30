@@ -9,16 +9,23 @@
     namespace Console;
 
 
+    use Psr\Container\ContainerInterface;
+
     class Boot
     {
         /**
          * @var \Console\string
          */
         protected $context;
+        /**
+         * @var \Psr\Container\ContainerInterface
+         */
+        protected $container;
 
-        public function __construct(string $context)
+        public function __construct(ContainerInterface $container,string $context)
         {
             $this->context = $context;
+            $this->container = $container;
         }
 
         /**
@@ -29,7 +36,7 @@
         {
             $className = 'Console\Context\\'.ucfirst($this->context).'\App';
             if (class_exists($className)) {
-                return new $className();
+                return $this->container->get($className);
             }
             throw new \Exception('The given Command context does not exist');
         }
