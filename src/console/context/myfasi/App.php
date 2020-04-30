@@ -40,32 +40,30 @@
          */
         protected function main(Options $options)
         {
+             //Provisoir : Si la commande n'existe pas
+
+             if (!in_array($options->getCmd(),['module','model'])) {
+                $cmd = $options->getArgs()[0];
+                $this->warning("Comande inexistante : $cmd");
+            }
+
             if ($options->getCmd() === 'module') {
-
-                $command = $this->commandBuilder('module');
-                $commandClass = new $command($options, $this);
-
-                /** @noinspection PhpUndefinedMethodInspection */
-                $validated = $commandClass->argsAnalyzer();
-
-                if ($validated !== false) {
-                    /** @noinspection PhpUndefinedMethodInspection */
-                    $commandClass->createModule();
-                }
+                $commandName = 'module'; 
             }
 
             if ($options->getCmd() === 'model') {
-                //var_dump($options->getArgs());
-                //var_dump($options->getOpt());
-                var_dump(explode('=','--param=value1=valu2'));
+                $commandName = 'model';
             }
 
+            $command = $this->commandBuilder($commandName);
+            $commandClass = new $command($options, $this);
 
-            //Provisoir
+            /** @noinspection PhpUndefinedMethodInspection */
+            $validated = $commandClass->argsAnalyzer();
 
-            if (!in_array($options->getCmd(),['module','model'])) {
-                $cmd = $options->getArgs()[0];
-                $this->warning("Comande inexistante : $cmd");
+            if ($validated !== false) {
+                /** @noinspection PhpUndefinedMethodInspection */
+                $commandClass->execute();
             }
 
             $this->info('end <3 !');
