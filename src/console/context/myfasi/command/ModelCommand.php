@@ -34,7 +34,9 @@ class ModelCommand extends MainCommand {
     {
         $this->makeEntity();
         $this->makeTable();
+        $this->dumpAutoload();
         $this->cli->info('Model Crée avec succès');
+        
       
     }
 

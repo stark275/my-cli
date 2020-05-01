@@ -36,6 +36,7 @@ class ModuleCommand extends MainCommand {
         $this->makeEntity();
         $this->makeTable();
         $this->makeViewPath();
+        $this->dumpAutoload();
         $this->cli->info('Module Crée avec succès');
     }
 }

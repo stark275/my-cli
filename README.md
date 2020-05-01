@@ -91,3 +91,7 @@ If your are using Windows, please download a linux terminal like `cmder`
 
    $commandContext->run();
     ```
+    
+    Enfin faites
+    
+    ```composer dump-autoload -o ```

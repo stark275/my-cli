@@ -76,6 +76,12 @@ abstract class MainCommand{
         $this->container = $container;
     }
 
+    protected function dumpAutoload()
+    {
+        $handle = popen("composer dump-autoload -o","w");
+        $q = pclose($handle);
+    }
+
     /**
      * @return bool|int
      */
