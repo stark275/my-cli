@@ -1,4 +1,13 @@
 <?php
+/*
+ * This file is part of the my-cli package.
+ *
+ * (c) Jacques Mumbere <stark1_5@live.com>
+ * 
+ * This Project is dedicated to the Fasi's MOSSAD Group 
+ * Fom Université Protestante au Congo
+ */
+
 namespace Console\Context\Myfasi\Command;
 
 use Console\Context\Myfasi\App;
@@ -112,7 +121,7 @@ abstract class MainCommand{
     protected function makeViewPath()
     {
         $viewPath =  $this->container->get('viewsPath'); 
-        $path = ROOT. $this->normalizePath($viewPath) .strtolower($this->name);
+        $path = ROOT. $this->normalizePath($viewPath).DS.strtolower($this->name);
         if(!is_dir( $path ))
             mkdir( $path, 0777, true );
     }
@@ -124,7 +133,7 @@ abstract class MainCommand{
      */
     public function normalizePath(string $path):string
     {
-        return str_replace('/', DIRECTORY_SEPARATOR,$path);
+        return str_replace('/', DIRECTORY_SEPARATOR, $path);
     }
 
     /**

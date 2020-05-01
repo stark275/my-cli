@@ -1,4 +1,12 @@
-<?php  
+<?php
+/*
+ * This file is part of the my-cli package.
+ *
+ * (c) Jacques Mumbere <stark1_5@live.com>
+ * 
+ * This Project is dedicated to the Fasi's MOSSAD Group 
+ * Fom Université Protestante au Congo
+ */  
 
 define('ROOT', __DIR__);
 define('DS', DIRECTORY_SEPARATOR);
@@ -16,7 +24,7 @@ require('vendor/autoload.php');
  */
 $containerBuilder = new \DI\ContainerBuilder();
 $containerBuilder->useAutoWiring(true);
-$containerBuilder->addDefinitions('config.php');
+$containerBuilder->addDefinitions('config.php'); // vendor/starkley/my-cli/config.php
 
 $containerBuilder->addDefinitions($context::CONFIG);
 

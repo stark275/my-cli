@@ -1,4 +1,13 @@
 <?php
+/*
+ * This file is part of the my-cli package.
+ *
+ * (c) Jacques Mumbere <stark1_5@live.com>
+ * 
+ * This Project is dedicated to the Fasi's MOSSAD Group 
+ * Fom Université Protestante au Congo
+ */
+
     namespace Console\Context\Myfasi;
 
     use Psr\Container\ContainerInterface;
@@ -109,8 +118,7 @@
                 /** @noinspection PhpUndefinedMethodInspection */
                 $commandClass->execute();
             }
-
-            $this->info('end <3 !');
+            $this->info('myfasi-console <3  !');
         }
 
         /**
