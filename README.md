@@ -1,4 +1,4 @@
-# PHP-CLI
+# My-CLI
 
 Simple PHP command line interface for personnal project.
 
